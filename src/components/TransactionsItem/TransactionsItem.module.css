@@ -1,0 +1,141 @@
+.transactionCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.transactionCard.income {
+  border-left: 4px solid #51cf66;
+}
+
+.transactionCard.expense {
+  border-left: 4px solid #ff6b6b;
+}
+
+.transactionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .transactionCard {
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.transactionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.transactionInfo {
+  flex: 1;
+}
+
+.transactionDate {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.transactionType {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.transactionType.income {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.transactionType.expense {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.transactionCategory {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+}
+
+.transactionAmount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: right;
+}
+
+.transactionAmount.income {
+  color: #059669;
+}
+
+.transactionAmount.expense {
+  color: #dc2626;
+}
+
+@media (max-width: 768px) {
+  .transactionAmount {
+    font-size: 1.25rem;
+  }
+}
+
+.transactionComment {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actionButton.edit {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.actionButton.edit:hover {
+  background: #c7d2fe;
+}
+
+.actionButton.delete {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.actionButton.delete:hover {
+  background: #fecaca;
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

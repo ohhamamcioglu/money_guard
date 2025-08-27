@@ -1,0 +1,41 @@
+.balanceContainer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+}
+
+@media (max-width: 768px) {
+  .balanceContainer {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.balanceTitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.balanceAmount {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .balanceAmount {
+    font-size: 2rem;
+  }
+}
+
+.balanceSign.negative {
+  color: #ff6b6b;
+}
+
+.balanceSign.positive {
+  color: #51cf66;
+}

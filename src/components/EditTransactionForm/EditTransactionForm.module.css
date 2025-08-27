@@ -1,0 +1,158 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.input {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.input.error {
+  border-color: #ef4444;
+}
+
+.textArea {
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+.textArea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.textArea.error {
+  border-color: #ef4444;
+}
+
+.datePickerWrapper :global(.react-datepicker-wrapper) {
+  width: 100%;
+}
+
+.datePickerWrapper :global(.react-datepicker__input-container) input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.datePickerWrapper :global(.react-datepicker__input-container) input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.datePickerWrapper :global(.react-datepicker__input-container) input.error {
+  border-color: #ef4444;
+}
+
+.errorMessage {
+  color: #ef4444;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.transactionInfo {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.transactionInfo.income {
+  border-left: 4px solid #51cf66;
+}
+
+.transactionInfo.expense {
+  border-left: 4px solid #ff6b6b;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.infoRow:last-child {
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.infoValue {
+  font-weight: 600;
+  color: #374151;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.button {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button.primary {
+  background: #667eea;
+  color: white;
+}
+
+.button.primary:hover:not(:disabled) {
+  background: #5a6fd8;
+}
+
+.button.primary:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.button.secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.button.secondary:hover {
+  background: #e5e7eb;
+}
