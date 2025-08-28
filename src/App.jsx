@@ -1,38 +1,73 @@
-import { Provider, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
-import { store } from './redux/store';
-import Home from './pages/Home';
-import AuthForm from './components/AuthForm';
-import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-function AppContent() {
-  const { isAuthenticated } = useSelector(state => state.auth);
+import { getCurrentUser } from './redux/slices/authSlice';
+import Loader from './components/Loader';
+import PrivateRoute from './components/PrivateRoute';
+import PublicRoute from './components/PublicRoute';
 
-  return (
-    <div className="App">
-      {isAuthenticated ? <Home /> : <AuthForm />}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </div>
-  );
-}
+// Pages
+import LoginPage from './pages/LoginPage';
+import RegistrationPage from './pages/RegistrationPage';
+import DashboardPage from './pages/DashboardPage';
+import HomePage from './pages/HomePage';
+import StatisticsPage from './pages/StatisticsPage';
+import CurrencyPage from './pages/CurrencyPage';
 
 function App() {
+  const dispatch = useDispatch();
+  const { isLoggedIn, token, isLoading } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if (token && !isLoggedIn) {
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch, token, isLoggedIn]);
+
   return (
-    <Provider store={store}>
-      <AppContent />
-    </Provider>
+    <>
+      {isLoading && <Loader />}
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route 
+          path="/login" 
+          element={
+            <PublicRoute>
+              <LoginPage />
+            </PublicRoute>
+          } 
+        />
+        <Route 
+          path="/register" 
+          element={
+            <PublicRoute>
+              <RegistrationPage />
+            </PublicRoute>
+          } 
+        />
+
+        {/* Private Routes */}
+        <Route 
+          path="/dashboard" 
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<Navigate to="/dashboard/home" replace />} />
+          <Route path="home" element={<HomePage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="currency" element={<CurrencyPage />} />
+        </Route>
+
+        {/* Catch all */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </>
   );
 }
 
-export default App
+export default App;

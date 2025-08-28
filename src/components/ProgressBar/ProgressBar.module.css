@@ -1,0 +1,52 @@
+.progressContainer {
+  margin-top: var(--spacing-sm);
+}
+
+.strengthSection {
+  margin-bottom: var(--spacing-xs);
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--border-color);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-xs);
+}
+
+.progressFill {
+  height: 100%;
+  transition: width var(--transition-normal), background-color var(--transition-normal);
+  border-radius: 2px;
+}
+
+.strengthInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.strengthText {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.matchSection {
+  margin-top: var(--spacing-xs);
+}
+
+.matchText {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.match {
+  color: var(--success-color);
+}
+
+.noMatch {
+  color: var(--expense-color);
+}

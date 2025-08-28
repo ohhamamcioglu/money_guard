@@ -18,11 +18,11 @@ const ButtonAddTransactions = () => {
     <>
       <button 
         type="button" 
-        className={styles.floatingButton}
+        className={styles.addButton}
         onClick={handleOpenModal}
-        title="Yeni işlem ekle"
       >
-        <Plus size={24} />
+        <Plus size={20} className={styles.icon} />
+        Add transaction
       </button>
 
       {isModalOpen && (

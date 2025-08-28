@@ -1,0 +1,123 @@
+:root {
+  /* Brand tokens for Money Guard (new design system) */
+  --bg-start: #1D0E5B;
+  --bg-end: #3C0E7A;
+  --glass: rgba(255,255,255,.06);
+  --glass-stroke: rgba(255,255,255,.18);
+  --text: #E9E7F6;
+  --muted: #B9B5D3;
+  --primary-start: #F2B705;
+  --primary-end: #C24DD0;
+  --income: #FFA800;
+  --expense: #FF6B6B;
+
+  /* Primary Colors */
+  --primary-color: #734AEF;
+  --secondary-color: #4A56E2;
+  --accent-color: #FFB627;
+  --error-color: #e7192e;
+  --success-color: #3cbc81;
+  --warning-color: #ffc107;
+  
+  /* Background Colors - GitHub Design */
+  --bg-primary: linear-gradient(
+    167deg,
+    rgba(123, 97, 255, 0.5) 0%,
+    rgba(76, 73, 191, 0.5) 45.4%,
+    rgba(76, 73, 191, 0.5) 54.6%,
+    rgba(123, 97, 255, 0.5) 100%
+  );
+  --bg-modal: linear-gradient(
+    220.16deg,
+    #a674c4 0%,
+    #6351af 100%
+  );
+  --bg-card: rgba(82, 59, 126, 0.6);
+  
+  /* Text Colors */
+  --text-primary: #fbfbfb;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  --white: #FBFBFB;
+  --white-600: rgba(255, 255, 255, 0.6);
+  --white-400: rgba(255, 255, 255, 0.4);
+  --white-color: #FFFFFF;
+  
+  /* Accent Gradient */
+  --accent-gradient: linear-gradient(
+    167deg,
+    #ffc727 0%,
+    #9bb537 100%
+  );
+  
+  /* Icon Colors */
+  --icon-violet: #734AEF;
+  
+  /* Typography */
+  --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --heading-family: 'Poppins', 'Outfit', var(--font-family);
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Font Sizes */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+  --font-2xl: 24px;
+  --font-3xl: 30px;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 40px;
+  --spacing-2xl: 48px;
+  
+  /* Border Radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 24px;
+
+  /* Design system helpers */
+  --card-radius: 24px;
+  --glass-blur: 18px;
+  --btn-height: 48px;
+  --btn-radius: 28px;
+  --shadow-card: 0 10px 30px rgba(0,0,0,.35);
+  --shadow-btn: 0 8px 20px rgba(0,0,0,.25);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-card: 0 4px 60px 0 rgba(0, 0, 0, 0.25);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
+  
+  /* Blur Effects */
+  --blur-sm: blur(10px);
+  --blur-md: blur(25px);
+  --blur-lg: blur(50px);
+  
+  /* Z-index */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* Income/Expense Colors */
+  --income-color: #FFB627;
+  --expense-color: #FF868D;
+}

@@ -42,13 +42,17 @@ const AddTransactionForm = ({ onSuccess, onCancel }) => {
   } = useForm({
     resolver: yupResolver(addTransactionSchema),
     defaultValues: {
-      type: 'expense',
+      type: 'EXPENSE',
       amount: '',
       date: new Date(),
       categoryId: '',
       comment: '',
     },
+    mode: 'onChange', // Validate on change for immediate feedback
   });
+
+  // Log all form errors
+  console.log('📝 Form errors:', errors);
 
   const watchedType = watch('type');
 
@@ -57,23 +61,34 @@ const AddTransactionForm = ({ onSuccess, onCancel }) => {
   }, [dispatch]);
 
   const onSubmit = async (data) => {
+    console.log('🔥 Form submit triggered!');
+    console.log('Form data:', data);
+    
     try {
+      console.log('Form data before processing:', data);
+      
+      // Backend API muhtemelen farklı format bekliyor, test edelim
       const transactionData = {
-        ...data,
+        type: data.type,
         amount: parseFloat(data.amount),
-        date: data.date.toISOString(),
+        date: data.date.toISOString().split('T')[0], // YYYY-MM-DD format
+        comment: data.comment || '',
       };
 
-      // Remove categoryId if type is income
-      if (data.type === 'income') {
-        delete transactionData.categoryId;
+      // Only add categoryId for EXPENSE transactions
+      if (data.type === 'EXPENSE' && data.categoryId) {
+        transactionData.categoryId = data.categoryId;
       }
 
-      await dispatch(addTransaction(transactionData)).unwrap();
+      console.log('Final transaction data to send:', transactionData);
+
+      const result = await dispatch(addTransaction(transactionData)).unwrap();
+      console.log('✅ Transaction added successfully:', result);
       toast.success('İşlem başarıyla eklendi');
       reset();
       onSuccess?.();
     } catch (error) {
+      console.error('❌ Transaction error:', error);
       toast.error(error || 'İşlem eklenirken bir hata oluştu');
     }
   };
@@ -89,15 +104,21 @@ const AddTransactionForm = ({ onSuccess, onCancel }) => {
             <div className={styles.typeToggle}>
               <button
                 type="button"
-                className={`${styles.typeButton} ${field.value === 'expense' ? styles.active : ''}`}
-                onClick={() => field.onChange('expense')}
+                className={`${styles.typeButton} ${field.value === 'EXPENSE' ? styles.active : ''}`}
+                onClick={() => {
+                  console.log('🔘 Switching to EXPENSE');
+                  field.onChange('EXPENSE');
+                }}
               >
                 Gider
               </button>
               <button
                 type="button"
-                className={`${styles.typeButton} ${field.value === 'income' ? styles.active : ''}`}
-                onClick={() => field.onChange('income')}
+                className={`${styles.typeButton} ${field.value === 'INCOME' ? styles.active : ''}`}
+                onClick={() => {
+                  console.log('🔘 Switching to INCOME');
+                  field.onChange('INCOME');
+                }}
               >
                 Gelir
               </button>
@@ -140,7 +161,7 @@ const AddTransactionForm = ({ onSuccess, onCancel }) => {
         {errors.date && <span className={styles.errorMessage}>{errors.date.message}</span>}
       </div>
 
-      {watchedType === 'expense' && (
+      {watchedType === 'EXPENSE' && (
         <div className={styles.formGroup}>
           <label className={styles.label}>Kategori</label>
           <select
@@ -180,6 +201,7 @@ const AddTransactionForm = ({ onSuccess, onCancel }) => {
           type="submit" 
           className={`${styles.button} ${styles.primary}`}
           disabled={isLoading}
+          onClick={() => console.log('🔥 Submit button clicked!')}
         >
           {isLoading ? 'Ekleniyor...' : 'Ekle'}
         </button>

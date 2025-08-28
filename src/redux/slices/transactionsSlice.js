@@ -30,10 +30,14 @@ export const addTransaction = createAsyncThunk(
   'transactions/addTransaction',
   async (transactionData, { rejectWithValue }) => {
     try {
+      console.log('Sending transaction data to API:', transactionData);
       const data = await transactionsAPI.createTransaction(transactionData);
+      console.log('API response:', data);
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      console.error('API error:', error);
+      const message = error.response?.data?.message || error.message || 'Failed to create transaction';
+      return rejectWithValue(message);
     }
   }
 );

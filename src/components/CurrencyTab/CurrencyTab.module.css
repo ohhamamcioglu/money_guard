@@ -1,0 +1,123 @@
+.container {
+  width: 100%;
+  background: var(--bg-card);
+  backdrop-filter: var(--blur-md);
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  font-size: 30px;
+  color: var(--white);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.loading {
+  text-align: center;
+  color: var(--white-600);
+  font-family: var(--font-family);
+  padding: 40px 0;
+}
+
+.currencyTable {
+  width: 100%;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tableHeader {
+  display: flex;
+  background: rgba(116, 74, 239, 0.8);
+  padding: 16px 0;
+}
+
+.headerCell {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: 18px;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.currencyRow {
+  display: flex;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background-color var(--transition-fast);
+}
+
+.currencyRow:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.currencyRow:last-child {
+  border-bottom: none;
+}
+
+.currencyCell {
+  flex: 1;
+  text-align: center;
+  padding: 8px;
+}
+
+.currencyCode {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  font-size: 16px;
+  color: var(--white);
+}
+
+.rate {
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-regular);
+  font-size: 16px;
+  color: var(--white-600);
+}
+
+.disclaimer {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.disclaimer p {
+  font-family: var(--font-family);
+  font-size: 12px;
+  color: var(--white-400);
+  font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    padding: 16px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .headerCell,
+  .currencyCode,
+  .rate {
+    font-size: 14px;
+  }
+  
+  .tableHeader {
+    padding: 12px 0;
+  }
+  
+  .currencyRow {
+    padding: 10px 0;
+  }
+}

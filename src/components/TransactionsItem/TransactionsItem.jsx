@@ -10,18 +10,15 @@ const TransactionsItem = ({ transaction, onEdit }) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('tr-TR', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       day: '2-digit',
       month: '2-digit',
-      year: 'numeric',
+      year: '2-digit'
     });
   };
 
   const formatAmount = (amount) => {
-    return new Intl.NumberFormat('tr-TR', {
-      style: 'currency',
-      currency: 'TRY',
-    }).format(amount);
+    return Math.abs(amount).toFixed(2);
   };
 
   const handleEdit = () => {
@@ -29,60 +26,85 @@ const TransactionsItem = ({ transaction, onEdit }) => {
   };
 
   const handleDelete = async () => {
-    if (window.confirm('Bu işlemi silmek istediğinizden emin misiniz?')) {
+    if (window.confirm('Are you sure you want to delete this transaction?')) {
       setIsDeleting(true);
       try {
         await dispatch(deleteTransaction(transaction.id)).unwrap();
-        toast.success('İşlem başarıyla silindi');
-      } catch (error) {
-        toast.error('İşlem silinirken bir hata oluştu');
+        toast.success('Transaction deleted successfully!');
+      } catch {
+        toast.error('Failed to delete transaction');
       } finally {
         setIsDeleting(false);
       }
     }
   };
 
+  const isIncome = transaction.type === 'INCOME';
+
   return (
-    <div className={`${styles.transactionCard} ${styles[transaction.type]}`}>
-      <div className={styles.transactionHeader}>
-        <div className={styles.transactionInfo}>
-          <div className={styles.transactionDate}>{formatDate(transaction.date)}</div>
-          <div className={`${styles.transactionType} ${styles[transaction.type]}`}>
-            {transaction.type === 'income' ? 'Gelir' : 'Gider'}
+    <div className={styles.transactionRow}>
+      {/* Mobile Layout */}
+      <div className={styles.mobileLayout}>
+        <div className={styles.mobileHeader}>
+          <div className={styles.mobileInfo}>
+            <div className={styles.mobileCategoryType}>
+              <span className={styles.mobileCategory}>
+                {transaction.categoryId ? transaction.category?.name : 'Income'}
+              </span>
+              <span className={`${styles.mobileType} ${isIncome ? styles.incomeType : styles.expenseType}`}>
+                {isIncome ? '+' : '-'}
+              </span>
+            </div>
+            <div className={styles.mobileComment}>
+              {transaction.comment || 'No comment'}
+            </div>
           </div>
-          {transaction.category && (
-            <div className={styles.transactionCategory}>{transaction.category.name}</div>
-          )}
+          <div className={styles.mobileActions}>
+            <button onClick={handleEdit} className={styles.editButton} disabled={isDeleting}>
+              <Edit size={16} />
+            </button>
+            <button onClick={handleDelete} className={styles.deleteButton} disabled={isDeleting}>
+              <Trash2 size={16} />
+            </button>
+          </div>
         </div>
-        <div className={`${styles.transactionAmount} ${styles[transaction.type]}`}>
-          {transaction.type === 'income' ? '+' : '-'}
-          {formatAmount(transaction.amount)}
+        <div className={styles.mobileFooter}>
+          <span className={styles.mobileDate}>
+            {formatDate(transaction.transactionDate || transaction.date)}
+          </span>
+          <span className={`${styles.mobileAmount} ${isIncome ? styles.incomeAmount : styles.expenseAmount}`}>
+            {formatAmount(transaction.amount)}
+          </span>
         </div>
       </div>
-      
-      {transaction.comment && (
-        <div className={styles.transactionComment}>"{transaction.comment}"</div>
-      )}
 
-      <div className={styles.actionButtons}>
-        <button 
-          type="button" 
-          className={`${styles.actionButton} ${styles.edit}`}
-          onClick={handleEdit}
-          disabled={isDeleting}
-        >
-          <Edit size={16} />
-          Düzenle
-        </button>
-        <button 
-          type="button" 
-          className={`${styles.actionButton} ${styles.delete}`}
-          onClick={handleDelete}
-          disabled={isDeleting}
-        >
-          <Trash2 size={16} />
-          {isDeleting ? 'Siliniyor...' : 'Sil'}
-        </button>
+      {/* Desktop Layout */}
+      <div className={styles.desktopLayout}>
+        <div className={styles.cellDate}>
+          {formatDate(transaction.transactionDate || transaction.date)}
+        </div>
+        <div className={styles.cellType}>
+          <span className={`${styles.typeIndicator} ${isIncome ? styles.incomeType : styles.expenseType}`}>
+            {isIncome ? '+' : '-'}
+          </span>
+        </div>
+        <div className={styles.cellCategory}>
+          {transaction.categoryId ? transaction.category?.name : 'Income'}
+        </div>
+        <div className={styles.cellComment}>
+          {transaction.comment || 'No comment'}
+        </div>
+        <div className={`${styles.cellAmount} ${isIncome ? styles.incomeAmount : styles.expenseAmount}`}>
+          {formatAmount(transaction.amount)}
+        </div>
+        <div className={styles.cellActions}>
+          <button onClick={handleEdit} className={styles.editButton} disabled={isDeleting}>
+            <Edit size={16} />
+          </button>
+          <button onClick={handleDelete} className={styles.deleteButton} disabled={isDeleting}>
+            <Trash2 size={16} />
+          </button>
+        </div>
       </div>
     </div>
   );

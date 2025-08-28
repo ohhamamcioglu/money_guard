@@ -1,41 +1,56 @@
 .balanceContainer {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 2rem;
-  border-radius: 16px;
-  margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-}
-
-@media (max-width: 768px) {
-  .balanceContainer {
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  gap: 12px;
 }
 
 .balanceTitle {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-  opacity: 0.9;
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  font-weight: 400;
+  text-align: center;
+  margin: 0;
 }
 
 .balanceAmount {
-  font-size: 2.5rem;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-@media (max-width: 768px) {
-  .balanceAmount {
-    font-size: 2rem;
+.balanceValue {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.positive {
+  color: var(--success-color);
+}
+
+.negative {
+  color: var(--error-color);
+}
+
+/* Mobile Responsive */
+@media (max-width: 767px) {
+  .balanceContainer {
+    padding: 20px 16px;
+    gap: 8px;
   }
-}
-
-.balanceSign.negative {
-  color: #ff6b6b;
-}
-
-.balanceSign.positive {
-  color: #51cf66;
+  
+  .balanceTitle {
+    font-size: var(--font-xs);
+  }
+  
+  .balanceValue {
+    font-size: var(--font-lg);
+  }
 }

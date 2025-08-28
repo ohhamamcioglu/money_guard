@@ -1,0 +1,22 @@
+.statisticsPage {
+  padding: var(--spacing-lg);
+  background: var(--background-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.statisticsPage h1 {
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.statisticsPage p {
+  color: var(--text-secondary);
+}

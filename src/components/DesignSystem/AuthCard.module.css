@@ -1,0 +1,13 @@
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 28px;
+  border-radius: 24px;
+}
+
+.header { text-align: center; margin-bottom: 12px; }
+.logo { width: 56px; height: 56px; margin: 0 auto 8px; background: linear-gradient(90deg, var(--primary-start), var(--primary-end)); border-radius: 12px; }
+.title { font-family: var(--heading-family); color: var(--text); font-size: 20px; margin-bottom: 4px; }
+.subtitle { color: var(--muted); font-size: 13px; }
+.body { margin: 18px 0; }
+.actions { display: flex; justify-content: center; gap: 12px; }

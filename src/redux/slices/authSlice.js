@@ -1,19 +1,34 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import * as authAPI from '../../api/auth';
 
+// Initial state
+const initialState = {
+  user: null,
+  token: localStorage.getItem('token'),
+  isLoggedIn: false,
+  isLoading: false,
+  error: null
+};
+
 // Async thunks
 export const signUp = createAsyncThunk(
   'auth/signUp',
   async (userData, { rejectWithValue }) => {
     try {
-      const data = await authAPI.signUp(userData);
-      // Store token in localStorage
-      if (data.token) {
-        localStorage.setItem('token', data.token);
+      console.log('Attempting to register user:', userData);
+      const response = await authAPI.signUp(userData);
+      console.log('Registration response:', response);
+      
+      // Save token to localStorage
+      if (response.token) {
+        localStorage.setItem('token', response.token);
       }
-      return data;
+      
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      console.error('Registration error:', error);
+      const message = error.response?.data?.message || error.message || 'Registration failed';
+      return rejectWithValue(message);
     }
   }
 );
@@ -22,29 +37,40 @@ export const signIn = createAsyncThunk(
   'auth/signIn',
   async (credentials, { rejectWithValue }) => {
     try {
-      const data = await authAPI.signIn(credentials);
-      // Store token in localStorage
-      if (data.token) {
-        localStorage.setItem('token', data.token);
+      console.log('Attempting to sign in user:', credentials);
+      const response = await authAPI.signIn(credentials);
+      console.log('Sign in response:', response);
+      
+      // Save token to localStorage
+      if (response.token) {
+        localStorage.setItem('token', response.token);
       }
-      return data;
+      
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      console.error('Sign in error:', error);
+      const message = error.response?.data?.message || error.message || 'Login failed';
+      return rejectWithValue(message);
     }
   }
 );
 
 export const signOut = createAsyncThunk(
   'auth/signOut',
-  async (_, { rejectWithValue }) => {
+  async () => {
     try {
+      console.log('Attempting to sign out user');
       await authAPI.signOut();
+      
+      // Remove token from localStorage
       localStorage.removeItem('token');
+      
       return {};
     } catch (error) {
-      // Even if API call fails, remove token locally
+      console.error('Sign out error:', error);
+      // Even if API call fails, we should still logout locally
       localStorage.removeItem('token');
-      return rejectWithValue(error.response?.data?.message || error.message);
+      return {};
     }
   }
 );
@@ -53,51 +79,43 @@ export const getCurrentUser = createAsyncThunk(
   'auth/getCurrentUser',
   async (_, { rejectWithValue }) => {
     try {
-      const data = await authAPI.getCurrentUser();
-      return data;
+      const token = localStorage.getItem('token');
+      if (!token) {
+        return rejectWithValue('No token found');
+      }
+      
+      console.log('Fetching current user');
+      const response = await authAPI.getCurrentUser();
+      console.log('Current user response:', response);
+      
+      return response;
     } catch (error) {
-      return rejectWithValue(error.response?.data?.message || error.message);
+      console.error('Get current user error:', error);
+      const message = error.response?.data?.message || error.message || 'Failed to get user';
+      return rejectWithValue(message);
     }
   }
 );
 
-const initialState = {
-  user: null,
-  token: localStorage.getItem('token'),
-  isAuthenticated: !!localStorage.getItem('token'),
-  isLoading: false,
-  error: null,
-};
-
+// Auth slice
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setCredentials: (state, action) => {
-      const { user, token } = action.payload;
-      state.user = user;
-      state.token = token;
-      state.isAuthenticated = true;
+    resetError: (state) => {
+      state.error = null;
     },
     logout: (state) => {
       state.user = null;
       state.token = null;
-      state.isAuthenticated = false;
-      localStorage.removeItem('token');
-    },
-    setLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
-    clearError: (state) => {
+      state.isLoggedIn = false;
       state.error = null;
-    },
+      localStorage.removeItem('token');
+    }
   },
   extraReducers: (builder) => {
     builder
-      // Sign up
+      // Sign Up
       .addCase(signUp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -106,13 +124,18 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isAuthenticated = true;
+        state.isLoggedIn = true;
+        state.error = null;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.user = null;
+        state.token = null;
+        state.isLoggedIn = false;
       })
-      // Sign in
+      
+      // Sign In
       .addCase(signIn.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -121,13 +144,18 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isAuthenticated = true;
+        state.isLoggedIn = true;
+        state.error = null;
       })
       .addCase(signIn.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
+        state.user = null;
+        state.token = null;
+        state.isLoggedIn = false;
       })
-      // Sign out
+      
+      // Sign Out
       .addCase(signOut.pending, (state) => {
         state.isLoading = true;
       })
@@ -135,33 +163,35 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.token = null;
-        state.isAuthenticated = false;
+        state.isLoggedIn = false;
+        state.error = null;
       })
       .addCase(signOut.rejected, (state) => {
         state.isLoading = false;
+        // Still logout locally even if API call fails
         state.user = null;
         state.token = null;
-        state.isAuthenticated = false;
+        state.isLoggedIn = false;
       })
-      // Get current user
+      
+      // Get Current User
       .addCase(getCurrentUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(getCurrentUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
-        state.isAuthenticated = true;
+        state.user = action.payload.user || action.payload;
+        state.isLoggedIn = true;
+        state.error = null;
       })
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        state.isAuthenticated = false;
-        state.token = null;
-        localStorage.removeItem('token');
+        // Don't logout user if getCurrentUser fails, might be network issue
       });
-  },
+  }
 });
 
-export const { setCredentials, logout, setLoading, setError, clearError } = authSlice.actions;
+export const { resetError, logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,0 +1,161 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg-card);
+  backdrop-filter: var(--blur-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  height: 60px;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logoText {
+  font-size: var(--font-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: var(--font-sm);
+}
+
+.username {
+  color: var(--text-secondary);
+  font-size: var(--font-sm);
+  font-weight: 400;
+}
+
+.logoutButton {
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.logoutButton:hover {
+  color: var(--text-primary);
+}
+
+/* Modal Styles */
+.logoutModal {
+  padding: 20px;
+  text-align: center;
+}
+
+.modalText {
+  color: var(--text-primary);
+  font-size: var(--font-md);
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.confirmButton {
+  padding: 12px 24px;
+  background: var(--accent-gradient);
+  color: var(--text-primary);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  min-width: 80px;
+}
+
+.confirmButton:hover {
+  opacity: 0.9;
+}
+
+.cancelButton {
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--text-secondary);
+  border-radius: var(--border-radius-sm);
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+/* Tablet Styles */
+@media (min-width: 768px) {
+  .header {
+    height: 80px;
+  }
+  
+  .container {
+    padding: 0 32px;
+  }
+  
+  .logoText {
+    font-size: var(--font-xl);
+  }
+  
+  .username {
+    font-size: var(--font-md);
+  }
+}
+
+/* Desktop Styles */
+@media (min-width: 1280px) {
+  .container {
+    padding: 0 16px;
+  }
+}
